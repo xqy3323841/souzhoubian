@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <RelativeLayout android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_title_bar"
+
+
+            >
+        <ImageButton android:id="@+id/search"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentLeft="true"
+                     android:background="@drawable/search"
+                     android:src="@drawable/abs__ic_search"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="搜周边"
+                  android:textSize="20dp"
+                  android:textColor="#ffffff"
+                  android:layout_centerInParent="true"
+                />
+        <ImageButton android:id="@+id/setting"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+                     android:src="@drawable/ic_action_setting"
+                     android:background="@drawable/search"
+                />
+    </RelativeLayout>
+    <ListView android:id="@+id/listview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:divider="#ff292929"
+              android:dividerHeight="1dp"
+              android:background="#ffffff"
+              android:cacheColorHint="#00000000"
+            >        //cacheColorHint 设置触碰颜色
+
+    </ListView>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_title_bar"
+            >
+        <TextView android:id="@+id/locationText"
+                  android:layout_width="320dp"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_centerVertical="true"
+                  android:textColor="#ff040306"
+
+                />
+        <ImageButton android:id="@+id/locationBt"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+
+                     android:src="@drawable/ic_localbar_location"
+                     android:background="@drawable/search"
+                />
+    </RelativeLayout>
+</LinearLayout>
+
