@@ -1,7 +1,9 @@
 package com.example.souzhoubian;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -32,6 +34,13 @@ public class MainActivity extends Activity {
         getData();
         simpleAdapter = new SimpleAdapter(this,data,R.layout.listview,new String[]{"name"},new int[]{R.id.id1});
         listView.setAdapter(simpleAdapter);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, aboutActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getData(){
