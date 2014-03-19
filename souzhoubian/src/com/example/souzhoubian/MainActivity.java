@@ -26,6 +26,8 @@ public class MainActivity extends Activity {
     private ListViewAdapter listViewAdapter;
     private LocationClient locationClient;
     private String getAppstr;
+    public  static double lng;//经度
+    public  static double lat;//纬度
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +127,17 @@ public class MainActivity extends Activity {
                 getAppstr=bdLocation.getAddrStr();
                 locationText.setText(getAppstr);
                 Log.d("souzhoubian", "onReceiveLocation " + getAppstr);
+                lng = bdLocation.getLongitude();
+                lat = bdLocation.getLatitude();
+                BaseApplication.locData.latitude = lat;
+                BaseApplication.locData.longitude = lng;
+                if (lng==0||lat==0)
+                {
+                    locationText.setText("定位失败请重新定位");
+                }else
+                {
+                    locationText.setText(getAppstr);
+                }
             }
 
             @Override
