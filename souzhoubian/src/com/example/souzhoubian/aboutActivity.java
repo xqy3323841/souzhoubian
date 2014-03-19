@@ -19,7 +19,7 @@ public class aboutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-        imageButton = (ImageButton) findViewById(R.id.go_back);
+        imageButton = (ImageButton) findViewById(R.id.about_go_back);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
