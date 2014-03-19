@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -26,8 +23,9 @@ public class MainActivity extends Activity {
     private TextView locationText;
     private ListView listView;
     private List data;
-    private SimpleAdapter simpleAdapter;
+    private ListViewAdapter listViewAdapter;
     private LocationClient locationClient;
+    private String getAppstr;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,32 +36,45 @@ public class MainActivity extends Activity {
         locationText= (TextView) findViewById(R.id.locationText);
         listView= (ListView) findViewById(R.id.listview);
         getData();
-        simpleAdapter = new SimpleAdapter(this,data,R.layout.listview,new String[]{"name"},new int[]{R.id.id1});
-        listView.setAdapter(simpleAdapter);
+        listViewAdapter = new ListViewAdapter(this,data,R.layout.listview,new String[]{"name"},new int[]{R.id.listview_text});
+        listView.setAdapter(listViewAdapter);
         getLocation();
-        //跳转至设置
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, aboutActivity.class);
-                startActivity(intent);
-            }
-        });
-        //跳转至搜索
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                 Intent intent = new Intent(MainActivity.this,searchActivity.class);
-                 startActivity(intent);
-            }
-        });
-        locationBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                locationText.setText("定位中....");
-                getLocation();
-            }
-        });
+
+
+            //跳转至设置
+            setting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(getAppstr!=null&&!getAppstr.equals("")){
+                    Intent intent = new Intent(MainActivity.this, aboutActivity.class);
+                    startActivity(intent);
+                    }else{
+                        Toast.makeText(MainActivity.this,"正在定位中，请稍候......",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            //跳转至搜索
+            search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(getAppstr!=null&&!getAppstr.equals("")){
+                    Intent intent = new Intent(MainActivity.this,searchActivity.class);
+                    startActivity(intent);
+                    }else{
+                    Toast.makeText(MainActivity.this,"正在定位中，请稍候......",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            locationBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    locationText.setText("定位中....");
+                    getLocation();
+                }
+            });
+
+
     }
 
     private void getData(){
@@ -111,8 +122,9 @@ public class MainActivity extends Activity {
         locationClient.registerLocationListener(new BDLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
-                locationText.setText(bdLocation.getAddrStr());
-                Log.d("souzhoubian", "onReceiveLocation " + bdLocation.getAddrStr());
+                getAppstr=bdLocation.getAddrStr();
+                locationText.setText(getAppstr);
+                Log.d("souzhoubian", "onReceiveLocation " + getAppstr);
             }
 
             @Override

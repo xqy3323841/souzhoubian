@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_title_bar"
+
+
+            >
+        <ImageButton android:id="@+id/about_go_back"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentLeft="true"
+                     android:src="@drawable/ic_nav_back"
+
+                     android:layout_margin="5dp"
+                     android:background="@drawable/search"
+
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+
+                  android:textSize="20dp"
+                  android:textColor="#ffffff"
+                  android:layout_centerInParent="true"
+                />
+    </RelativeLayout>
+    <ListView android:id="@+id/listview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:divider="#ff292929"
+              android:dividerHeight="1dp"
+              android:background="#ffffff"
+              android:cacheColorHint="#00000000"
+            >        //cacheColorHint 设置触碰颜色
+
+    </ListView>
+</LinearLayout>

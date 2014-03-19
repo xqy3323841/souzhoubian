@@ -18,7 +18,7 @@ public class searchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.search);
 
         goBack = (ImageButton) findViewById(R.id.search_go_back);
         search = (ImageButton) findViewById(R.id.getsearch);
