@@ -17,16 +17,16 @@ import java.util.Map;
 /**
  * Created with IntelliJ IDEA.
  * User: x
- * Date: 14-3-19
- * Time: 下午1:06
+ * Date: 14-3-20
+ * Time: 下午3:29
  * To change this template use File | Settings | File Templates.
  */
-public class ListViewAdapter extends SimpleAdapter {
+public class ListViewAdapterSecond extends SimpleAdapter {
     LayoutInflater inflater = null;
-Context context;
-List list;
+    Context context;
+    List list;
 
-    public ListViewAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+    public ListViewAdapterSecond(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         inflater = LayoutInflater.from(context);
         this.context = context;
@@ -37,22 +37,29 @@ List list;
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
         ImageButton gonextbt = (ImageButton) view.findViewById(R.id.listview_go_next);
-        gonextbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        HashMap<String, Object> item = (HashMap) list.get(position);
+        Object F = item.get("flag");
+        if (F.equals(false)) {
+            gonextbt.setVisibility(View.INVISIBLE);
+        } else {
+            gonextbt.setVisibility(View.VISIBLE);
+            gonextbt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                Intent intent = new Intent(context,SecondActivity.class);
-                intent.putExtra("id",position);
-                intent.putExtra("title",(HashMap)list.get(position));
-                context.startActivity(intent);
-                Log.d("跳转到",""+position);
-            }
-        });
-        TextView text= (TextView) view.findViewById(R.id.listview_text);
+                    Intent intent = new Intent(context, ThirdActivity.class);
+                    intent.putExtra("id", position);
+                    intent.putExtra("title", (HashMap) list.get(position));
+                    context.startActivity(intent);
+                    Log.d("跳转到", "" + position);
+                }
+            });
+        }
+        TextView text = (TextView) view.findViewById(R.id.listview_text);
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("跳转到",""+position);
+                Log.d("跳转到", "" + position);
             }
         });
         //To change body of overridden methods use File | Settings | File Templates.

@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         setting= (ImageButton) findViewById(R.id.setting);
         locationBt= (ImageButton) findViewById(R.id.locationBt);
         locationText= (TextView) findViewById(R.id.locationText);
-        listView= (ListView) findViewById(R.id.listview);
+        listView= (ListView) findViewById(R.id.main_listview);
         getData();
         listViewAdapter = new ListViewAdapter(this,data,R.layout.listview,new String[]{"name"},new int[]{R.id.listview_text});
         listView.setAdapter(listViewAdapter);
@@ -84,6 +84,7 @@ public class MainActivity extends Activity {
         HashMap<String,String> item;
         item= new HashMap<String, String>();
         item.put("name","餐饮服务");
+
         data.add(item);
         item= new HashMap<String, String>();
         item.put("name","购物服务");
