@@ -20,7 +20,8 @@
                      android:background="@drawable/search"
 
                 />
-        <EditText android:layout_width="240dp"
+        <EditText android:id="@+id/search_editText"
+                  android:layout_width="240dp"
                   android:layout_height="wrap_content"
                   android:layout_centerInParent="true"
                   android:hint="请输入要搜索的内容"

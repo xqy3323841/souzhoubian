@@ -62,6 +62,8 @@ public class MainActivity extends Activity {
                 public void onClick(View view) {
                     if(getAppstr!=null&&!getAppstr.equals("")){
                     Intent intent = new Intent(MainActivity.this,searchActivity.class);
+                    intent.putExtra("weidu",lng+"");
+                    intent.putExtra("jingdu",lat+"");
                     startActivity(intent);
                     }else{
                     Toast.makeText(MainActivity.this,"正在定位中，请稍候......",Toast.LENGTH_LONG).show();
@@ -132,6 +134,7 @@ public class MainActivity extends Activity {
                 lat = bdLocation.getLatitude();
                 BaseApplication.locData.latitude = lat;
                 BaseApplication.locData.longitude = lng;
+                Log.d("jingweidu",lat+""+lng);
                 if (lng==0||lat==0)
                 {
                     locationText.setText("定位失败请重新定位");

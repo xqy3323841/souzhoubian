@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="40dp">
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:background="@drawable/bg_title_bar"/>
+        <ImageButton android:layout_width="50dp"
+                     android:layout_height="match_parent"
+                     android:src="@drawable/ic_nav_back"
+                     android:background="@drawable/state"
+                     android:id="@+id/btSearch"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:text="详细信息"
+                  android:textSize="20dp"
+                  android:textColor="#ffffff"
+                  android:layout_centerInParent="true"
+                  android:layout_marginTop="10dp"/>
+        <ImageButton android:layout_width="50dp"
+                     android:layout_height="match_parent"
+                     android:src="@drawable/ic_action_route"
+                     android:background="@drawable/state"
+                     android:layout_alignParentRight="true"
+                     android:id="@+id/btnSetting"
+                />
+    </RelativeLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="#ffffff">
+        <Button android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_byfoot"
+                android:text="步行"
+                android:background="@android:color/transparent"
+                android:id="@+id/btWalk"
+                android:layout_weight="1"/>
+        <Button android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/btBus"
+                android:background="@android:color/transparent"
+                android:text="公交"
+                />
+        <Button android:layout_width="0dp"
+                android:id="@+id/btCar"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_bycar"
+                android:background="@android:color/transparent"
+                android:text="驾车"/>
+    </LinearLayout>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <com.baidu.mapapi.map.MapView
+                android:id="@+id/mapView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:clickable="true"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="20dp"
+                  android:background="#7f000000"
+                android:id="@+id/distance"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="50dp"
+                  android:id="@+id/xiangxi"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="40dp"
+                      android:layout_alignParentBottom="true"
+                      android:background="#ffffff"
+                >
+            <ImageView android:layout_width="40dp"
+                       android:layout_height="fill_parent"
+                       android:background="@drawable/ic_phone"
+                    />
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:id="@+id/tel"
+                    android:autoLink="phone"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
