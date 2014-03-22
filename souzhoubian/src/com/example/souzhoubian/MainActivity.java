@@ -132,8 +132,7 @@ public class MainActivity extends Activity {
                 Log.d("souzhoubian", "onReceiveLocation " + getAppstr);
                 lng = bdLocation.getLongitude();
                 lat = bdLocation.getLatitude();
-                BaseApplication.locData.latitude = lat;
-                BaseApplication.locData.longitude = lng;
+
                 Log.d("jingweidu",lat+""+lng);
                 if (lng==0||lat==0)
                 {

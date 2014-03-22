@@ -7,19 +7,21 @@ package com.example.souzhoubian;
  * Time: 上午11:29
  * To change this template use File | Settings | File Templates.
  */
+
+
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.*;
-import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.search.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
@@ -40,7 +42,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * Created by wzg on 14-3-18.
@@ -65,7 +66,7 @@ public class baiduMapActivity extends Activity {
     private DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
     private String resultStr;
     private int a = 0;
-    private List <Map<String,Object>>list = new ArrayList<Map<String, Object>>();
+    private List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
     private PoiOverlay poiOverlay;
     private String name;
     private Button btWalk;
@@ -93,6 +94,7 @@ public class baiduMapActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.baiduview);
+
         layoutInflater = LayoutInflater.from(this);
         init();
         doReceviceLocation();
@@ -115,7 +117,7 @@ public class baiduMapActivity extends Activity {
         //获取已选择商户的位置
         shopLatitude = Double.parseDouble(getIntent().getStringExtra("shopLatitude"));
         shopLongitude = Double.parseDouble(getIntent().getStringExtra("shopLongitude"));
-        mapView = (MapView) findViewById(R.id.mapView);
+        mapView = (MapView) findViewById(R.id.mapView1);
         GeoPoint startPoint = new GeoPoint((int) (nowLatitude * 1E6), (int) (nowLongitude * 1E6));
         GeoPoint endPoint = new GeoPoint((int) (shopLatitude * 1E6), (int) (shopLongitude * 1E6));
 
@@ -161,7 +163,7 @@ public class baiduMapActivity extends Activity {
             minLon = (int) (nowLongitude * 1E6);
         }
 
-        mkSearch.init(BaseApplication.getInstance().mBMapManager, new MKSearchListener() {
+        mkSearch.init(BaiduMapApplication.getInstance().mBMapManager, new MKSearchListener() {
             @Override
             public void onGetPoiResult(MKPoiResult mkPoiResult, int i, int i2) {
 
@@ -362,6 +364,7 @@ public class baiduMapActivity extends Activity {
         request = new HttpGet(url);
         int timeout = 30000;
         HttpParams params = new BasicHttpParams();
+
         HttpConnectionParams.setSoTimeout(params, timeout);
         HttpConnectionParams.setConnectionTimeout(params, timeout);
 
@@ -494,7 +497,7 @@ public class baiduMapActivity extends Activity {
             Log.d(TAG,i+"  点");
             selectedPoiItemIndex = i;
             PoiItem item = (PoiItem) poiOverlay.getItem(i);
-            View popup = layoutInflater.inflate(R.layout.popup,null);
+            View popup = layoutInflater.inflate(R.layout.popup1,null);
             TextView titleTextView = (TextView) popup.findViewById(R.id.titleTextView);
             titleTextView.setText((String)list.get(i).get("name"));
             TextView snippetTextView = (TextView) popup.findViewById(R.id.snippetTextView);
@@ -504,6 +507,7 @@ public class baiduMapActivity extends Activity {
             }else {
                 telphont.setText(list.get(i).get("tel") + "");
             }
+
             popupOverlay.showPopup(popup,item.getPoint(),item.getMarker().getIntrinsicHeight());
 
             return super.onTap(i);

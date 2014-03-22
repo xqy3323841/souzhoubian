@@ -105,7 +105,7 @@ public class searchActivity extends Activity {
                             Toast.makeText(searchActivity.this, "服务器繁忙,请重试..", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Map<String, Object> map = list.get(i - 1);
+                        Map<String, Object> map = list.get(i );
                         Intent intent = new Intent(searchActivity.this, baiduMapActivity.class);
                         intent.putExtra("shopLatitude", map.get("shopLatitude").toString());
                         intent.putExtra("shopLongitude", map.get("shopLongitude").toString());
