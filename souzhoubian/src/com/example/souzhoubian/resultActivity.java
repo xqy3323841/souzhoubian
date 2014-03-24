@@ -31,98 +31,89 @@ import java.util.Map;
 /**
  * Created with IntelliJ IDEA.
  * User: x
- * Date: 14-3-19
- * Time: 上午9:44
+ * Date: 14-3-23
+ * Time: 下午8:43
  * To change this template use File | Settings | File Templates.
  */
-public class searchActivity extends Activity {
-    private int page = 10;
-    private ImageButton goBack,search;
-    private EditText editText;
-    private String text;
-    private String old;
-    private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-    private final String CITY_CODE = "0029";
+public class resultActivity extends Activity {
+    private TextView textView;
+    private ListView listView;
+    private ImageButton gobackbt,refreshbt,getmapbt;
     private double nowLongitude;
     private double nowLatitude;
+    private String text;
+    private HashMap<String,String> item;
+    private int page = 10;
+    private String old;
+    private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
     private HttpGet request = null;
+    private final String CITY_CODE = "0029";
     private final DefaultHttpClient client = new DefaultHttpClient();
     private ProgressDialog progressDialog;
     private String resultStr;
-    private String name;
-    private String telephone;
-    private String address;
-    private int a = 0;
-    private SimpleAdapter adapter;
-    private double shopLongitude;
-    private double shopLatitude;
-    private double distance;
     private static double DEF_PI = 3.14159265359; // PI
     private static double DEF_2PI = 6.28318530712; // 2*PI
     private static double DEF_PI180 = 0.01745329252; // PI/180.0
     private static double DEF_R = 6370693.5; // radius of earth
-    private ListView listView;
-
-
-
+    private SimpleAdapter adapter;
+    private double shopLongitude;
+    private double shopLatitude;
+    private double distance;
+    private int a = 0;
+    private String name;
+    private String telephone;
+    private String address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
-
-        goBack = (ImageButton) findViewById(R.id.search_go_back);
-        search = (ImageButton) findViewById(R.id.getsearch);
-        editText= (EditText) findViewById(R.id.search_editText);
-        listView = (ListView) findViewById(R.id.search_listview);
+        setContentView(R.layout.result);
+        textView = (TextView) findViewById(R.id.result_textView);
+        listView = (ListView) findViewById(R.id.result_listview);
+        gobackbt= (ImageButton) findViewById(R.id.result_go_back);
+        refreshbt = (ImageButton) findViewById(R.id.getrefresh);
+        getmapbt = (ImageButton) findViewById(R.id.getMap);
+        item = (HashMap<String, String>) getIntent().getSerializableExtra("title");
+        textView.setText(item.get("name"));
         nowLongitude = Double.parseDouble(getIntent().getStringExtra("weidu"));
         nowLatitude = Double.parseDouble(getIntent().getStringExtra("jingdu"));
-        goBack.setOnClickListener(new View.OnClickListener() {
+
+        gobackbt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(searchActivity.this,MainActivity.class);
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        text =  item.get("name");
+        getlist();
+        adapter= new SimpleAdapter (resultActivity.this, list, R.layout.infolist,
+                new String[]{"name", "address", "distance"},
+                new int[]{R.id.textInfo1, R.id.textInfo2, R.id.textInfo3});
+        listView.setAdapter(adapter);
+        old = text;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > list.size()) {
+                    Toast.makeText(resultActivity.this, "服务器繁忙,请重试..", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Map<String, Object> map = list.get(i );
+                Intent intent = new Intent(resultActivity.this, baiduMapActivity.class);
+                intent.putExtra("shopLatitude", map.get("shopLatitude").toString());
+                intent.putExtra("shopLongitude", map.get("shopLongitude").toString());
+                intent.putExtra("nowLongitude", nowLongitude + "");
+                intent.putExtra("nowLatitude", nowLatitude + "");
+                intent.putExtra("size",list.size()+"");
+                intent.putExtra("address",map.get("address")+"");
+                intent.putExtra("myaddress",getIntent().getStringArrayExtra("myaddress")+"");
+                intent.putExtra("distance",map.get("distance")+"");
+                Log.d("", shopLatitude + " 商店 " + shopLongitude + " 自己 " + nowLatitude + "  " + nowLongitude);
                 startActivity(intent);
             }
         });
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text = editText.getText().toString();
-                 if (text == null&&text.equals("")){
-                     Toast.makeText(searchActivity.this,"请输入搜索内容",Toast.LENGTH_LONG).show();
-                 }else{
-                     search();
-                 }
-                adapter= new SimpleAdapter (searchActivity.this, list, R.layout.infolist,
-                         new String[]{"name", "address", "distance"},
-                         new int[]{R.id.textInfo1, R.id.textInfo2, R.id.textInfo3});
-                listView.setAdapter(adapter);
-                old = text;
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        if (i > list.size()) {
-                            Toast.makeText(searchActivity.this, "服务器繁忙,请重试..", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Map<String, Object> map = list.get(i );
-                        Intent intent = new Intent(searchActivity.this, baiduMapActivity.class);
-                        intent.putExtra("shopLatitude", map.get("shopLatitude").toString());
-                        intent.putExtra("shopLongitude", map.get("shopLongitude").toString());
-                        intent.putExtra("nowLongitude", nowLongitude + "");
-                        intent.putExtra("nowLatitude", nowLatitude + "");
-                        intent.putExtra("size",list.size()+"");
-                        intent.putExtra("address",map.get("address")+"");
-                        intent.putExtra("myaddress",getIntent().getStringArrayExtra("myaddress")+"");
-                        intent.putExtra("distance",map.get("distance")+"");
-                        Log.d("", shopLatitude + " 商店 " + shopLongitude + " 自己 " + nowLatitude + "  " + nowLongitude);
-                        startActivity(intent);
-                    }
-                });
-            }
-        });
     }
-    public void search() {
+    public void getlist(){
         page = 10;
         try {
             text = URLEncoder.encode(text, "utf-8");
@@ -157,13 +148,13 @@ public class searchActivity extends Activity {
             @Override
             protected void onPostExecute(Integer integer) {
                 progressDialog.dismiss();
-                Toast.makeText(searchActivity.this, "查询成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(resultActivity.this, "查询成功", Toast.LENGTH_SHORT).show();
                 jsonbt();
             }
 
             @Override
             protected void onPreExecute() {
-                progressDialog = new ProgressDialog(searchActivity.this);
+                progressDialog = new ProgressDialog(resultActivity.this);
                 progressDialog.setMessage("加载中...");
                 progressDialog.show();
                 super.onPreExecute();

@@ -23,13 +23,14 @@ import java.util.List;
 public class ThirdActivity extends Activity {
       private HashMap<String,String> item;
       private int id;
-      private TextView textView;
+      private TextView textView,listtextview;
       private ImageButton go_backbt;
       private ListView listView;
       private String title;
       private String[] Strings;
       private List<HashMap<String,Object>> list;
-     private SimpleAdapter simpleAdapter;
+
+    private ListViewAdapterThird listViewAdapterThird;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class ThirdActivity extends Activity {
 
         textView= (TextView) findViewById(R.id.third_text);
         go_backbt= (ImageButton) findViewById(R.id.third_go_back);
-
+        listtextview = (TextView) findViewById(R.id.third_listview_text);
         listView = (ListView) findViewById(R.id.third_listview);
         list = new ArrayList<HashMap<String,Object>>();
         id = getIntent().getIntExtra("id",0);
@@ -48,14 +49,15 @@ public class ThirdActivity extends Activity {
         getStrings();
         list = getData("name",Strings,list);
 
-        simpleAdapter = new SimpleAdapter(this,list,R.layout.thirdlistview,new String[]{"name"},new int[]{R.id.third_listview_text});
-        listView.setAdapter(simpleAdapter);
+        listViewAdapterThird = new ListViewAdapterThird(this,list,R.layout.thirdlistview,new String[]{"name"},new int[]{R.id.third_listview_text});
+        listView.setAdapter(listViewAdapterThird);
         go_backbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
     }
 
     public void getStrings(){

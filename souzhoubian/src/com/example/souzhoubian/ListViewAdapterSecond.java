@@ -59,7 +59,12 @@ public class ListViewAdapterSecond extends SimpleAdapter {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("跳转到", "" + position);
+                Intent intent = new Intent(context,resultActivity.class);
+                intent.putExtra("weidu",MainActivity.lng+"");
+                intent.putExtra("jingdu",MainActivity.lat+"");
+                intent.putExtra("title",(HashMap)list.get(position));
+                context.startActivity(intent);
+                Log.d("跳转到",""+position);
             }
         });
         //To change body of overridden methods use File | Settings | File Templates.

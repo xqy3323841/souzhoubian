@@ -52,7 +52,7 @@ public class baiduMapActivity extends Activity {
     private MapController controller;
     private Double nowLongitude;
     private Double nowLatitude;
-    private final String TAG = "wawawawa";
+    private final String TAG = "";
     private Double shopLatitude;
     private Double shopLongitude;
     private MKSearch mkSearch;
